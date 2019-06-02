@@ -28,7 +28,8 @@ public class App {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() throws InterruptedException {
-        emitter.send("hello! " + nextHello()); // send the message to amq with unique payload for debugging
-        return "hello send with date";
+        String s = nextHello();
+        emitter.send(s); // send the message to amq with unique payload for debugging
+        return "hello sent: " + s;
     }
 }
