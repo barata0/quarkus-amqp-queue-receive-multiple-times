@@ -26,40 +26,9 @@ public class AmqpReceiver {
 
     private static final Logger logger = LoggerFactory.getLogger(AmqpReceiver.class);
 
-    // @Incoming("my-amqp-input")
-    // @Acknowledgment(Acknowledgment.Strategy.MANUAL)
-    // public CompletableFuture<Object> receive(Message<String> message) {
-    //     String input = message.getPayload();
-    //     CompletableFuture<Object> cf = CompletableFuture.runAsync(new DummyWorker(input))
-    //         .handle((s, t) -> { 
-    //             if (t == null) {
-    //                 // This logger message prints the hashcode usefull to compare 2 messages
-    //                 logger.info("sending ack to message with hashcode:" + ((AmqpMessage<String>) message).getAmqpMessage().hashCode());
-    //                 message.ack();
-    //             } else {
-    //                 // usefull if the workers throw an error
-    //                 logger.warn("Error, no ack will be sent");
-    //             }
-    //             return CompletableFuture.runAsync(() -> {});
-    //         });
-    //     return cf;
-    // }
-
-    // @Incoming("my-amqp-input")
-    // @Acknowledgment(Acknowledgment.Strategy.MANUAL)
-    // public CompletionStage<Message<Void>> receive(Message<String> message) {
-
-    //     String input = message.getPayload();
-    //     System.out.println(input + " - " + new Date().getTime());
-    //     System.out.println("  processed: " + Thread.currentThread().getName());
-
-    //     CompletableFuture<Message<Void>> cf = new CompletableFuture<>();
-    //     return cf;
-
-    // }
-
     @Incoming("my-amqp-input")
     public CompletionStage<Void> receive(String input) {
+        logger.info("received message with payload: " + input);
         return CompletableFuture.runAsync(new DummyWorker(input));
     }
 

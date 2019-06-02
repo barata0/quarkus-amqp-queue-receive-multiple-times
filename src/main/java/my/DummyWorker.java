@@ -20,7 +20,7 @@ public class DummyWorker implements Runnable {
     public void run() {
         try {
             logger.info("starting long task " + payload);
-            Thread.sleep(2000); // simulate long task
+            Thread.sleep(1000); // simulate long task
             logger.info("long task finished " + payload);
         } catch (InterruptedException e) {
             e.printStackTrace();

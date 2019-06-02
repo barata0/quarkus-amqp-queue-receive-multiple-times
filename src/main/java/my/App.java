@@ -16,9 +16,9 @@ import io.smallrye.reactive.messaging.annotations.Stream;
 public class App {
 
     // used to generate unique messages
-    static int i = 0;
-    static synchronized int nextId() {
-        return i++;
+    private static int helloCount = 0;
+    private static synchronized String nextHello() {
+        return "hello " + helloCount++;
     }
 
     @Inject
@@ -28,8 +28,7 @@ public class App {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() throws InterruptedException {
-        int id = nextId();
-        emitter.send("hello! " + id); // send the message to amq with unique payload for debugging
+        emitter.send("hello! " + nextHello()); // send the message to amq with unique payload for debugging
         return "hello send with date";
     }
 }
